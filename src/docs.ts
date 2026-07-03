@@ -32,10 +32,14 @@ export const documentation = `<!DOCTYPE html>
       color: var(--text);
       background: var(--bg);
     }
-    main {
+    main, footer {
       max-width: 52rem;
       margin: 0 auto;
       padding: 2.5rem 1.25rem 4rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 1.5rem;
     }
     h1 {
       margin: 0 0 0.5rem;
@@ -163,8 +167,8 @@ console.log(data);</code></pre>
     <p class="note">On error, <code>success</code> is <code>false</code> and <code>error</code> describes the problem (e.g. validation, unauthorized).</p>
   </main>
   <footer>
-    <p>Crafted by <a href="https://msar.me">Saiful Alam</a></p>
-    <p>Source code: <a href="https://github.com/4msar/email-api">https://github.com/4msar/email-api</a></p>
+    <p>Crafted by <a href="https://msar.me" target="_blank">Saiful Alam</a></p>
+    <p>Source code: <a href="https://github.com/4msar/email-api" target="_blank">https://github.com/4msar/email-api</a></p>
   </footer>
 </body>
 </html>`;
