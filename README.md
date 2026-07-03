@@ -18,61 +18,64 @@ Minimal authenticated HTTP email API built with Cloudflare Workers and Cloudflar
 
 Onboard your sending domain in Cloudflare Email Service.
 
-Update the sender configuration in:
-
-```text
-wrangler.jsonc
-```
-
-Example:
-
-```json
-{
-  "vars": {
-    "FROM_EMAIL": "noreply@msar.me",
-    "FROM_NAME": "MSAR"
-  }
-}
-```
+Update `allowed_sender_addresses` in `wrangler.jsonc` to match your verified sender addresses.
 
 ### 2. Install dependencies
 
 ```bash
-npm install
+yarn install
 ```
 
-### 3. Configure the API key
+### 3. Configure environment variables
 
-For production:
+The Worker requires three values: `API_KEY`, `FROM_EMAIL`, and `FROM_NAME`. These are declared in `wrangler.jsonc` and are not committed to the repo.
 
-```bash
-npx wrangler secret put API_KEY
+```jsonc
+{
+  "secrets": {
+    "required": ["API_KEY", "FROM_EMAIL", "FROM_NAME"]
+  }
+}
 ```
 
-Enter a long random API key.
+#### Local development
 
-For local development:
+Copy the example file and set your values:
 
 ```bash
 cp .dev.vars.example .dev.vars
 ```
 
-Then update:
-
 ```env
-API_KEY=your-local-api-key
+FROM_EMAIL=noreply@msar.me
+FROM_NAME=Saiful Alam
+API_KEY=replace-with-a-long-random-secret
 ```
+
+Never commit `.dev.vars`.
+
+#### Production
+
+Set each value as a Wrangler secret:
+
+```bash
+yarn wrangler secret put API_KEY
+yarn wrangler secret put FROM_EMAIL
+yarn wrangler secret put FROM_NAME
+```
+
+`wrangler deploy` will fail if any required secret is missing.
 
 ### 4. Start development server
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 ### 5. Deploy
 
 ```bash
-npm run deploy
+yarn deploy
 ```
 
 ## Health check
