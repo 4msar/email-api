@@ -1,0 +1,15 @@
+{
+  "name": "cloudflare-email-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260703",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.0.0"
+  }
+}

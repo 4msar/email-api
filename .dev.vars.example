@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local development (never commit .dev.vars)
+# EXAMPLE_SECRET=your-secret-here
+
+API_KEY=replace-with-a-long-random-secret

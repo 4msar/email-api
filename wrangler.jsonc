@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "email-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-03",
+
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "remote": true,
+      "allowed_sender_addresses": [
+        "noreply@msar.me"
+      ]
+    }
+  ],
+
+  "vars": {
+    "FROM_EMAIL": "noreply@msar.me",
+    "FROM_NAME": "MSAR"
+  }
+}
