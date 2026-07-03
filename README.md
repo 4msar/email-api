@@ -73,7 +73,7 @@ npm run deploy
 ## Health check
 
 ```bash
-curl https://email-api.YOUR_SUBDOMAIN.workers.dev/health
+curl https://email-api.msar.workers.dev/health
 ```
 
 Response:
@@ -89,7 +89,7 @@ Response:
 
 ```bash
 curl -X POST \
-  "https://email-api.YOUR_SUBDOMAIN.workers.dev/send" \
+  "https://email-api.msar.workers.dev/send" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
