@@ -1,3 +1,5 @@
+import { documentation } from "./docs";
+
 interface Env {
   EMAIL: SendEmail;
   API_KEY: string;
@@ -31,6 +33,10 @@ export default {
         status: 204,
         headers: corsHeaders(),
       });
+    }
+
+    if(url.pathname === "/") {
+      return documentationResponse(request);
     }
 
     if (url.pathname === "/health" && request.method === "GET") {
@@ -283,6 +289,17 @@ function json(
     headers: {
       ...corsHeaders(),
       ...extraHeaders,
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
+function documentationResponse(_request: Request): Response {
+  return new Response(documentation, {
+    status: 200,
+    headers: {
+      ...corsHeaders(),
+      "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "no-store",
     },
   });

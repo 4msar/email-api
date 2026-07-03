@@ -7,6 +7,11 @@ Minimal authenticated HTTP email API built with Cloudflare Workers and Cloudflar
 - `GET /health`
 - `POST /send`
 
+## URLs
+
+- Production: https://email-api.msar.me
+- Development: https://email-api.msar.workers.dev
+
 ## Setup
 
 ### 1. Configure Cloudflare Email Service
@@ -73,7 +78,7 @@ npm run deploy
 ## Health check
 
 ```bash
-curl https://email-api.msar.workers.dev/health
+curl https://email-api.msar.me/health
 ```
 
 Response:
@@ -89,7 +94,7 @@ Response:
 
 ```bash
 curl -X POST \
-  "https://email-api.msar.workers.dev/send" \
+  "https://email-api.msar.me/send" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
