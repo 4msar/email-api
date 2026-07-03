@@ -8,7 +8,6 @@ export const documentation = `<!DOCTYPE html>
     :root {
       color-scheme: light dark;
       --bg: #0b0d10;
-      --surface: #141820;
       --border: #2a3140;
       --text: #e8edf5;
       --muted: #9aa6b8;
@@ -18,7 +17,6 @@ export const documentation = `<!DOCTYPE html>
     @media (prefers-color-scheme: light) {
       :root {
         --bg: #f6f8fb;
-        --surface: #ffffff;
         --border: #d8dee9;
         --text: #1b2430;
         --muted: #5b677a;
@@ -51,8 +49,8 @@ export const documentation = `<!DOCTYPE html>
       padding-bottom: 0.35rem;
     }
     h3 {
-      margin: 1.5rem 0 0.5rem;
-      font-size: 1rem;
+      margin: 1.25rem 0 0.5rem;
+      font-size: 0.875rem;
       color: var(--muted);
       font-weight: 600;
       text-transform: uppercase;
@@ -60,9 +58,8 @@ export const documentation = `<!DOCTYPE html>
     }
     p, li { color: var(--text); }
     .lead { color: var(--muted); margin: 0 0 1.5rem; }
-    ul { padding-left: 1.25rem; }
+    ul { padding-left: 1.25rem; margin: 0.5rem 0 1rem; }
     li + li { margin-top: 0.25rem; }
-    a { color: var(--accent); }
     code {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 0.9em;
@@ -89,102 +86,81 @@ export const documentation = `<!DOCTYPE html>
       white-space: pre-wrap;
       word-break: break-word;
     }
-    .endpoint {
+    .method {
       display: inline-block;
-      margin-right: 0.5rem;
       font-weight: 600;
+      margin-right: 0.35rem;
     }
+    .path { font-weight: 600; }
+    .note { color: var(--muted); font-size: 0.95rem; }
   </style>
 </head>
 <body>
   <main>
     <h1>Cloudflare Email API</h1>
-    <p class="lead">Minimal authenticated HTTP email API built with Cloudflare Workers and Cloudflare Email Service.</p>
+    <p class="lead">Base URL: <code>https://email-api.msar.me</code></p>
 
-    <h2>Endpoints</h2>
-    <ul>
-      <li><code class="endpoint">GET</code> <code>/health</code></li>
-      <li><code class="endpoint">POST</code> <code>/send</code></li>
-    </ul>
+    <h2><code class="method">GET</code> <code class="path">/health</code></h2>
+    <p>Check that the API is running. No authentication required.</p>
 
-    <h2>URLs</h2>
-    <ul>
-      <li>Production: <a href="https://email-api.msar.me">https://email-api.msar.me</a></li>
-      <li>Development: <a href="https://email-api.msar.workers.dev">https://email-api.msar.workers.dev</a></li>
-    </ul>
-
-    <h2>Setup</h2>
-
-    <h3>1. Configure Cloudflare Email Service</h3>
-    <p>Onboard your sending domain in Cloudflare Email Service.</p>
-    <p>Update the sender configuration in <code>wrangler.jsonc</code>:</p>
-    <pre><code>{
-  "vars": {
-    "FROM_EMAIL": "noreply@msar.me",
-    "FROM_NAME": "MSAR"
-  }
-}</code></pre>
-
-    <h3>2. Install dependencies</h3>
-    <pre><code>yarn install</code></pre>
-
-    <h3>3. Configure the API key</h3>
-    <p>For production:</p>
-    <pre><code>npx wrangler secret put API_KEY</code></pre>
-    <p>Enter a long random API key.</p>
-    <p>For local development:</p>
-    <pre><code>cp .dev.vars.example .dev.vars</code></pre>
-    <p>Then update <code>.dev.vars</code>:</p>
-    <pre><code>API_KEY=your-local-api-key</code></pre>
-
-    <h3>4. Start development server</h3>
-    <pre><code>yarn dev</code></pre>
-
-    <h3>5. Deploy</h3>
-    <pre><code>yarn deploy</code></pre>
-
-    <h2>Health check</h2>
+    <h3>cURL</h3>
     <pre><code>curl https://email-api.msar.me/health</code></pre>
-    <p>Response:</p>
+
+    <h3>JavaScript</h3>
+    <pre><code>const response = await fetch("https://email-api.msar.me/health");
+const data = await response.json();
+console.log(data);</code></pre>
+
+    <h3>Response</h3>
     <pre><code>{
   "success": true,
   "status": "ok"
 }</code></pre>
 
-    <h2>Send an email</h2>
+    <h2><code class="method">POST</code> <code class="path">/send</code></h2>
+    <p>Send an email. Requires <code>Authorization: Bearer YOUR_API_KEY</code>.</p>
+
+    <p>Request body (JSON):</p>
+    <ul>
+      <li><code>to</code> — recipient email (required)</li>
+      <li><code>subject</code> — email subject (required)</li>
+      <li><code>text</code> — plain text body (required if <code>html</code> is omitted)</li>
+      <li><code>html</code> — HTML body (required if <code>text</code> is omitted)</li>
+      <li><code>replyTo</code> — reply-to address (optional)</li>
+    </ul>
+
+    <h3>cURL</h3>
     <pre><code>curl -X POST "https://email-api.msar.me/send" \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
-  -d '{"to":"recipient@example.com","subject":"Hello from Cloudflare","text":"Plain text fallback","html":"&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;Sent from my Worker.&lt;/p&gt;","replyTo":"hello@msar.me"}'</code></pre>
-    <p>At least one of <code>text</code> or <code>html</code> is required.</p>
+  -d '{"to":"recipient@example.com","subject":"Hello","text":"Plain text fallback","html":"&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;Sent from my Worker.&lt;/p&gt;","replyTo":"hello@msar.me"}'</code></pre>
 
-    <h2>Successful response</h2>
+    <h3>JavaScript</h3>
+    <pre><code>const response = await fetch("https://email-api.msar.me/send", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    to: "recipient@example.com",
+    subject: "Hello",
+    text: "Plain text fallback",
+    html: "&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;Sent from my Worker.&lt;/p&gt;",
+    replyTo: "hello@msar.me",
+  }),
+});
+
+const data = await response.json();
+console.log(data);</code></pre>
+
+    <h3>Response</h3>
     <pre><code>{
   "success": true,
   "message": "Email sent successfully",
   "messageId": "..."
 }</code></pre>
-
-    <h2>Validation error</h2>
-    <pre><code>{
-  "success": false,
-  "error": "A valid to email address is required"
-}</code></pre>
-
-    <h2>Unauthorized response</h2>
-    <pre><code>{
-  "success": false,
-  "error": "Unauthorized"
-}</code></pre>
-
-    <h2>Security</h2>
-    <ul>
-      <li>The sender email address is configured server-side.</li>
-      <li>The API does not accept a <code>from</code> field from the request body.</li>
-      <li>The <code>/send</code> endpoint requires Bearer token authentication.</li>
-      <li>Do not expose the API key in frontend or browser-side JavaScript.</li>
-      <li>Use this API from trusted backend applications.</li>
-    </ul>
+    <p class="note">On error, <code>success</code> is <code>false</code> and <code>error</code> describes the problem (e.g. validation, unauthorized).</p>
   </main>
 </body>
 </html>`;
