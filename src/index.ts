@@ -5,6 +5,7 @@ interface Env {
   API_KEY: string;
   FROM_EMAIL: string;
   FROM_NAME: string;
+  FORWARD_TO?: string;
 }
 
 interface SendEmailRequest {
@@ -198,6 +199,57 @@ export default {
           code: emailError.code,
         },
         500,
+      );
+    }
+  },
+  async email(
+    message: ForwardableEmailMessage,
+    env: Env,
+    _ctx: ExecutionContext,
+  ): Promise<void> {
+    const subject =
+      message.headers.get("subject") ?? "(no subject)";
+
+    console.log("Inbound email received", {
+      from: message.from,
+      to: message.to,
+      subject,
+      rawSize: message.rawSize,
+    });
+
+    const recipient = message.to.toLowerCase();
+
+    if (recipient.startsWith("noreply@")) {
+      message.setReject(
+        "This address does not accept incoming mail",
+      );
+      return;
+    }
+
+    if (!env.FORWARD_TO) {
+      message.setReject("Inbound email is not configured");
+      return;
+    }
+
+    try {
+      await message.forward(
+        env.FORWARD_TO,
+        new Headers({
+          "X-Original-Recipient": message.to,
+        }),
+      );
+    } catch (error) {
+      console.error("Inbound email forwarding failed", {
+        from: message.from,
+        to: message.to,
+        error:
+          error instanceof Error
+            ? error.message
+            : String(error),
+      });
+
+      message.setReject(
+        "Unable to process email at this time",
       );
     }
   },

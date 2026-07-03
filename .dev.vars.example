@@ -3,3 +3,6 @@
 FROM_EMAIL=noreply@msar.me
 FROM_NAME=Saiful Alam
 API_KEY=replace-with-a-long-random-secret
+
+# Verified Email Routing destination for inbound mail (optional)
+# FORWARD_TO=you@example.com

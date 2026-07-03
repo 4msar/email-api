@@ -62,6 +62,9 @@ Set each value as a Wrangler secret:
 yarn wrangler secret put API_KEY
 yarn wrangler secret put FROM_EMAIL
 yarn wrangler secret put FROM_NAME
+
+# Inbound email forwarding
+yarn wrangler secret put FORWARD_TO
 ```
 
 `wrangler deploy` will fail if any required secret is missing.
