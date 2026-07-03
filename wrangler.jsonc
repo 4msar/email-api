@@ -9,13 +9,14 @@
       "name": "EMAIL",
       "remote": true,
       "allowed_sender_addresses": [
-        "noreply@msar.me"
+        "noreply@msar.me",
+        "hello@msar.me"
       ]
     }
   ],
 
   "vars": {
     "FROM_EMAIL": "noreply@msar.me",
-    "FROM_NAME": "MSAR"
+    "FROM_NAME": "Saiful Alam"
   }
 }
