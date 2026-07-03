@@ -15,8 +15,9 @@
     }
   ],
 
-  "vars": {
-    "FROM_EMAIL": "noreply@msar.me",
-    "FROM_NAME": "Saiful Alam"
-  }
+  // "vars": {
+  //   "FROM_EMAIL": "noreply@msar.me",
+  //   "FROM_NAME": "Saiful Alam",
+  //   "API_KEY": "your-api-key"
+  // }
 }
