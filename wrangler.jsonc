@@ -4,6 +4,21 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-07-03",
 
+  // Production on a custom domain, plus <name>.<subdomain>.workers.dev for testing.
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "email-api.msar.me",
+      "custom_domain": true
+    }
+  ],
+
+  // Workers Logs: console output and request traces in the dashboard.
+  "observability": {
+    "enabled": true
+  },
+  "upload_source_maps": true,
+
   "send_email": [
     {
       "name": "EMAIL",
@@ -15,6 +30,8 @@
     }
   ],
 
+  // Set with `wrangler secret put <NAME>` (production) or .dev.vars (local).
+  // FORWARD_TO is optional and only needed for inbound forwarding.
   "secrets": {
     "required": ["API_KEY", "FROM_EMAIL", "FROM_NAME"]
   }
