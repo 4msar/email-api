@@ -17,6 +17,8 @@ Opening the root URL shows interactive API docs.
 
 Inbound mail is handled by the Worker's `email` handler (see [Inbound forwarding](#inbound-forwarding)).
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/4msar/email-api)
+
 ## Project structure
 
 ```
@@ -30,6 +32,9 @@ src/
 ├── http.ts             # JSON / HTML / CORS response helpers
 ├── docs.html           # Documentation page served at /
 └── env.d.ts            # Optional env vars not inferred by wrangler
+public/                 # Static assets served by Cloudflare (Workers Assets)
+├── og.png              # Social preview image (Open Graph / Twitter)
+└── _headers            # Cache headers for static assets
 wrangler.jsonc          # Worker config: bindings, routes, observability
 ```
 
@@ -57,6 +62,7 @@ In `wrangler.jsonc`:
 - **`send_email[].allowed_sender_addresses`**: the verified addresses the Worker may send from. `FROM_EMAIL` must be one of them.
 - **`routes`**: the custom domain the Worker is served on. Change `email-api.msar.me` to your own hostname, or remove the block to use workers.dev only.
 - **`observability`**: Workers Logs is on, so `console.log`/`console.error` output shows up in the dashboard.
+- **`assets`**: files in `public/` are served directly from Cloudflare at their path (e.g. `/og.png`); all other requests go to the Worker.
 
 After editing `wrangler.jsonc`, run `yarn cf-typegen` to regenerate types.
 
