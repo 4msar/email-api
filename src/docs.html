@@ -9,18 +9,18 @@
             content="A tiny HTTP API for sending email from Cloudflare Workers."
         />
         <meta name="theme-color" content="#f6821f" />
-        <link rel="canonical" href="https://email-api.msar.me/" />
+        <link rel="canonical" href="{{BASE_URL}}/" />
 
         <!-- Open Graph -->
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Email API" />
-        <meta property="og:url" content="https://email-api.msar.me/" />
+        <meta property="og:url" content="{{BASE_URL}}/" />
         <meta property="og:title" content="Cloudflare Email API" />
         <meta
             property="og:description"
             content="Send email with a single HTTP request. A minimal JSON API for transactional email on Cloudflare Workers."
         />
-        <meta property="og:image" content="https://email-api.msar.me/og.png" />
+        <meta property="og:image" content="{{BASE_URL}}/og.png" />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="2426" />
         <meta property="og:image:height" content="1588" />
@@ -36,7 +36,7 @@
             name="twitter:description"
             content="Send email with a single HTTP request. A minimal JSON API for transactional email on Cloudflare Workers."
         />
-        <meta name="twitter:image" content="https://email-api.msar.me/og.png" />
+        <meta name="twitter:image" content="{{BASE_URL}}/og.png" />
         <style>
             :root {
                 color-scheme: light;
@@ -574,11 +574,11 @@
                 </p>
                 <div class="base-url">
                     <span class="label">Base URL</span>
-                    <code id="base-url">https://email-api.msar.me</code>
+                    <code id="base-url">{{BASE_URL}}</code>
                     <button
                         class="copy"
                         type="button"
-                        data-copy-text="https://email-api.msar.me"
+                        data-copy-text="{{BASE_URL}}"
                     >
                         Copy
                     </button>
@@ -637,11 +637,11 @@
                     </div>
                     <pre
                         data-panel="curl"
-                    ><code>curl https://email-api.msar.me/health</code></pre>
+                    ><code>curl {{BASE_URL}}/health</code></pre>
                     <pre
                         data-panel="js"
                         hidden
-                    ><code><span class="tok-k">const</span> response = <span class="tok-k">await</span> fetch(<span class="tok-s">"https://email-api.msar.me/health"</span>);
+                    ><code><span class="tok-k">const</span> response = <span class="tok-k">await</span> fetch(<span class="tok-s">"{{BASE_URL}}/health"</span>);
 <span class="tok-k">const</span> data = <span class="tok-k">await</span> response.json();
 console.log(data);</code></pre>
                 </div>
@@ -735,14 +735,14 @@ console.log(data);</code></pre>
                     </div>
                     <pre
                         data-panel="curl"
-                    ><code>curl -X POST <span class="tok-s">"https://email-api.msar.me/send"</span> \
+                    ><code>curl -X POST <span class="tok-s">"{{BASE_URL}}/send"</span> \
   -H <span class="tok-s">"Authorization: Bearer YOUR_API_KEY"</span> \
   -H <span class="tok-s">"Content-Type: application/json"</span> \
-  -d <span class="tok-s">'{"to":"recipient@example.com","subject":"Hello","text":"Plain text fallback","html":"&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;Sent from my Worker.&lt;/p&gt;","replyTo":"hello@msar.me"}'</span></code></pre>
+  -d <span class="tok-s">'{"to":"recipient@example.com","subject":"Hello","text":"Plain text fallback","html":"&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;Sent from my Worker.&lt;/p&gt;","replyTo":"support@example.com"}'</span></code></pre>
                     <pre
                         data-panel="js"
                         hidden
-                    ><code><span class="tok-k">const</span> response = <span class="tok-k">await</span> fetch(<span class="tok-s">"https://email-api.msar.me/send"</span>, {
+                    ><code><span class="tok-k">const</span> response = <span class="tok-k">await</span> fetch(<span class="tok-s">"{{BASE_URL}}/send"</span>, {
   method: <span class="tok-s">"POST"</span>,
   headers: {
     Authorization: <span class="tok-s">"Bearer YOUR_API_KEY"</span>,
@@ -753,7 +753,7 @@ console.log(data);</code></pre>
     subject: <span class="tok-s">"Hello"</span>,
     text: <span class="tok-s">"Plain text fallback"</span>,
     html: <span class="tok-s">"&lt;h1&gt;Hello&lt;/h1&gt;&lt;p&gt;Sent from my Worker.&lt;/p&gt;"</span>,
-    replyTo: <span class="tok-s">"hello@msar.me"</span>,
+    replyTo: <span class="tok-s">"support@example.com"</span>,
   }),
 });
 

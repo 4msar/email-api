@@ -5,7 +5,7 @@ import { error, html, json, methodNotAllowed, preflight } from "./http";
 
 export default {
     async fetch(request, env): Promise<Response> {
-        const { pathname } = new URL(request.url);
+        const { origin, pathname } = new URL(request.url);
         const { method } = request;
 
         if (method === "OPTIONS") {
@@ -15,7 +15,7 @@ export default {
         switch (pathname) {
             case "/":
                 return method === "GET" || method === "HEAD"
-                    ? html(documentation)
+                    ? html(documentation.replaceAll("{{BASE_URL}}", origin))
                     : methodNotAllowed("GET, HEAD");
 
             case "/health":

@@ -4,14 +4,10 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-07-03",
 
-  // Production on a custom domain, plus <name>.<subdomain>.workers.dev for testing.
+  // Served on <name>.<subdomain>.workers.dev. To use a custom domain, attach it in the
+  // dashboard (Worker → Settings → Domains & Routes) or add a "routes" entry here:
+  //   "routes": [{ "pattern": "email.example.com", "custom_domain": true }]
   "workers_dev": true,
-  "routes": [
-    {
-      "pattern": "email-api.msar.me",
-      "custom_domain": true
-    }
-  ],
 
   // Workers Logs: console output and request traces in the dashboard.
   // Static files in ./public (e.g. /og.png) are served directly; other paths hit the Worker.
@@ -24,14 +20,12 @@
   },
   "upload_source_maps": true,
 
+  // Sends from FROM_EMAIL, which must be on a domain onboarded to Email Service.
+  // Optionally lock the binding down with "allowed_sender_addresses": ["noreply@example.com"].
   "send_email": [
     {
       "name": "EMAIL",
-      "remote": true,
-      "allowed_sender_addresses": [
-        "noreply@msar.me",
-        "hello@msar.me"
-      ]
+      "remote": true
     }
   ],
 

@@ -1,7 +1,7 @@
 # Copy to .dev.vars for local development (never commit .dev.vars)
 
-FROM_EMAIL=noreply@msar.me
-FROM_NAME=Saiful Alam
+FROM_EMAIL=noreply@example.com
+FROM_NAME=Example App
 API_KEY=replace-with-a-long-random-secret
 
 # Verified Email Routing destination for inbound mail (optional)
